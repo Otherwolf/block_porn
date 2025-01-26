@@ -30,6 +30,11 @@ def backup_and_replace(system_path, local_path):
     else:
         print("Резервная копия уже существует.")
 
+    # Проверяем доступность системного файла для записи
+    if not os.access(system_path, os.W_OK):
+        print(f"Нет прав на изменение файла {system_path}. Запустите скрипт с правами администратора.")
+        return False
+
     # Заменяем системный файл
     shutil.copy2(local_path, system_path)
     print(f"Файл {system_path} был заменён.")
